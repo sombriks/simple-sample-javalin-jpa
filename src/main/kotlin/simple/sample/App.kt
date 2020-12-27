@@ -20,6 +20,7 @@ class App {
         config.addStaticFiles("/public")
         config.enableCorsForAllOrigins()
     }.routes {
+        get("/") { ctx -> ctx.result("ONLINE") }
         path("users") {
             get(userController::listAll)
             get(":id", userController::findOne)
