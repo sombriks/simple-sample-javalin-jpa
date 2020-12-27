@@ -15,16 +15,18 @@ class App {
     val userController: UserController = UserController(emf)
     val productController: ProductController = ProductController(emf)
 
-    val app: Javalin = Javalin.create{ config ->
+    val app: Javalin = Javalin.create { config ->
         config.defaultContentType = "application/json"
         config.addStaticFiles("/public")
         config.enableCorsForAllOrigins()
     }.routes {
         path("users") {
             get(userController::listAll)
+            get(":id", userController::findOne)
         }
         path("products") {
             get(productController::listAll)
+            get(":id", productController::findOne)
 
         }
     }
@@ -34,7 +36,7 @@ class App {
     }
 
     fun migrate() {
-        val flyway = Flyway.configure().dataSource("jdbc:h2:file:~/sample-javalin","sa","").load()
+        val flyway = Flyway.configure().dataSource("jdbc:h2:file:~/sample-javalin", "sa", "").load()
         flyway.migrate()
     }
 }

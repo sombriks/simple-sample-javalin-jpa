@@ -11,4 +11,15 @@ class UserController(val emf: EntityManagerFactory) {
         ctx.json(em.createQuery("select u from User u").resultList)
         em.close()
     }
+
+    fun findOne(ctx: Context) {
+        val em = emf.createEntityManager()
+        try {
+            val p = em.createQuery("select u from User u where u.id = :id")
+                .setParameter("id", ctx.pathParam("id").toLong()).singleResult
+            ctx.json(p)
+        } finally {
+            em.close()
+        }
+    }
 }
