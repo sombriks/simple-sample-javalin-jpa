@@ -9,6 +9,6 @@ import javax.persistence.Id
 data class Product(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long,
-    var name: String?
+    var id: Long? = null,
+    var name: String? = null
 )

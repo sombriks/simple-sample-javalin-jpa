@@ -1,8 +1,7 @@
 package simple.sample
 
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.get
-import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.apibuilder.ApiBuilder.*
 import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence
 import org.flywaydb.core.Flyway
@@ -24,6 +23,9 @@ class App {
         path("users") {
             get(userController::listAll)
             get(":id", userController::findOne)
+            post(userController::insert)
+            put(":id",userController::update)
+            delete(":id",userController::del)
         }
         path("products") {
             get(productController::listAll)
